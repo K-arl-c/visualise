@@ -4,7 +4,7 @@
 Visualise is an online audio visualiser that will allow users to upload and play their own songs. This will be accompanied by dynamic live visuals synced to the audio. Users will be able to select a themee / mode (bars, waves etc) and their preferences will be saved. The site utilises a preset list of royalty free music and they will be able to search & filter these by genre / mood. 
 
 ### Key Features (Front)
-- [ ] Upload & Play Songs
+- [x] Upload & Play Songs
 - [ ] Live Visuals (animated visualiser synced to audio)
 - [ ] Theme / Mode Selection
 - [ ] User Preferences
@@ -16,9 +16,9 @@ Visualise is an online audio visualiser that will allow users to upload and play
 - [ ] visualiser settings (styles, colors and effects)
 
 ### Plan (Front)
-- [ ] Play / pause button
-- [ ] Upload tracks button (loaded into `<audio>`)
+- [x] Play / pause button
+- [x] Upload tracks button (loaded into `<audio>`)
 - [ ] Canvas (for visualiser)
 - [ ] Theme selection
-- [ ] Song progress bar
+- [x] Song progress bar
 - [ ] Song search page
