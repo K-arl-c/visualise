@@ -1,0 +1,21 @@
+*{
+    margin: 5px;
+}
+
+#player-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#progress-bar{
+    border: 2px solid black;
+    min-height: 10px;
+    min-width: 100px;
+}
+
+#sound-button{
+    height: 30px;
+    width: 30px;
+}
