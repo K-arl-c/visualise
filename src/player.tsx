@@ -1,50 +1,58 @@
-import p5 from 'p5';
-import { StrictMode, useState, ChangeEvent, ChangeEventHandler, useEffect, useRef} from 'react'
-import React from 'react';
-import "./player.css"
+// Player.tsx
+import { useEffect, useRef } from "react";
+import React from "react";
+import p5 from "p5";
+import "./player.css";
 
+export const Player = () => {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const p5InstanceRef = useRef<p5 | null>(null);
 
-export const Player = () =>{
+  useEffect(() => {
+    const sketch = (p: p5) => {
+      p.setup = () => {
+        const canvas = p.createCanvas(700, 700);
+        canvas.parent(canvasRef.current!);
+        p.background("white");
+        p.fill(0, 0, 255);
+        p.circle(p.width / 2, p.height / 2, 250);
+      };
 
-const [audioSrc, setAudioSrc] = useState<string | null>(null);
-const canvasRef = useRef(null);
+      p.draw = () => {
+        p.background("white");
+        p.fill(0, 0, 255);
+        p.circle(p.width / 2, p.height / 2, 250);
+      };
 
-useEffect(() =>{
-    const sketch = (p5) =>{
-
-        p5.setup = () =>{
-            p5.createCanvas(500,500).parent(canvasRef.current)
-        };
-
-        p5.draw = () =>{
-            p5.background(200);
-            p5.fill(0,0,255);
-            p5.ellipse(50,50,80);
-        };
+      p.mousePressed = () => {
+        if (audioRef.current) {
+          if (audioRef.current.paused) {
+            audioRef.current.play()
+              .then(() => console.log("Song started playing"))
+              .catch((err) => console.error("Error playing song:", err));
+          } else {
+            audioRef.current.pause();
+            console.log("Song paused");
+          }
+        }
+      };
     };
-        new p5(sketch);
 
-        return () => {}
-}, []);
+    p5InstanceRef.current = new p5(sketch);
 
-const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
-    const file = event.target.files?.[0];
-    if (file){
-        const fileUrl = URL.createObjectURL(file);
-        setAudioSrc(fileUrl);
-    }
+    return () => {
+      if (p5InstanceRef.current) {
+        p5InstanceRef.current.remove();
+        console.log("p5 instance cleaned up");
+      }
+    };
+  }, []);
 
-}
-
-    return(
-        <div id='player-holder'>
-            <input type="file" id='song' accept='.mp3'onChange={handleFileChange}/>
-            <audio src={audioSrc ?? undefined} loop controls></audio>
-            <div id='canvas-container' ref={canvasRef}></div>
-            {/* <div id='progress-bar'></div> */}
-            {/* <span id='song-title'>Song Title</span>
-            <span id='artist-name'>Artist Name</span> */}
-            {/* <img src="../src/assets/play-button.svg" alt="Pause Button" id='sound-button'/> */}
-        </div>
-    )
-}
+  return (
+    <div id="player-holder">
+      <div id="canvas-container" ref={canvasRef}></div>
+      <audio ref={audioRef} src="/assets/test-audio.mp3" controls preload="auto" />
+    </div>
+  );
+};

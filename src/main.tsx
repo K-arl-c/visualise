@@ -9,8 +9,8 @@ import { Player } from './player'
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
-    <header>    
+    <>    
       <Player/>
-    </header>
+    </>
   // </StrictMode>,
 )
