@@ -1,5 +1,5 @@
 // Player.tsx
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import p5 from "p5";
 import "./player.css";
@@ -8,10 +8,12 @@ export const Player = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const p5InstanceRef = useRef<p5 | null>(null);
+  const [audioSrc, setAudioSrc] = useState<string | null>(null);
 
   useEffect(() => {
     const sketch = (p: p5) => {
       p.setup = () => {
+        setAudioSrc("/assets/test-audio.mp3");
         const canvas = p.createCanvas(700, 700);
         canvas.parent(canvasRef.current!);
         p.background("white");
@@ -49,10 +51,19 @@ export const Player = () => {
     };
   }, []);
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
+    const file = event.target.files?.[0];
+    if (file){
+        const fileUrl = URL.createObjectURL(file);
+        setAudioSrc(fileUrl);
+    }
+  }
+
   return (
     <div id="player-holder">
+      <input type="file" id='song' accept='.mp3'onChange={handleFileChange}/>
       <div id="canvas-container" ref={canvasRef}></div>
-      <audio ref={audioRef} src="/assets/test-audio.mp3" controls preload="auto" />
+      <audio ref={audioRef} src={audioSrc ?? undefined} preload="auto" />
     </div>
   );
 };

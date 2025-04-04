@@ -20,5 +20,5 @@ Visualise is an online audio visualiser that will allow users to upload and play
 - [x] Upload tracks button (loaded into `<audio>`)
 - [x] Canvas (for visualiser)
 - [ ] Theme selection
-- [x] Song progress bar
+- [ ] Song progress bar
 - [ ] Song search page
